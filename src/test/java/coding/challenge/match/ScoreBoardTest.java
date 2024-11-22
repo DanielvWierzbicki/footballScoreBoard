@@ -11,7 +11,6 @@ class ScoreBoardTest {
 
     private ScoreBoard scoreBoard;
     private final String HOME_TEAM = "Mexico";
-    private final String INVALID_HOME_TEAM = "incorrect_value";
     private final String AWAY_TEAM = "Canada";
 
     @BeforeEach
@@ -86,6 +85,26 @@ class ScoreBoardTest {
         assertEquals("Germany 2 - France 2", summary.get(4).toString());
     }
 
+    @Test
+    void testSummaryWithSameScores() {
+        scoreBoard.startMatch("Mexico", "Canada");
+        scoreBoard.updateScore("Mexico", "Canada", 3, 3);
+
+        scoreBoard.startMatch("Spain", "Brazil");
+        scoreBoard.updateScore("Spain", "Brazil", 3, 3);
+
+        List<Match> summary = scoreBoard.getSummary();
+
+        assertEquals("Spain 3 - Brazil 3", summary.get(0).toString());
+        assertEquals("Mexico 3 - Canada 3", summary.get(1).toString());
+    }
+
+    @Test
+    void testEdgeCases() {
+        assertThrows(IllegalArgumentException.class, () -> scoreBoard.startMatch("", AWAY_TEAM));
+        assertThrows(IllegalArgumentException.class, () -> scoreBoard.updateScore("incorrect_home_team", AWAY_TEAM, 1, 1));
+        scoreBoard.startMatch(HOME_TEAM, AWAY_TEAM);
+        assertThrows(IllegalArgumentException.class, () -> scoreBoard.updateScore(HOME_TEAM, AWAY_TEAM, -1, 1));
     }
 
 }

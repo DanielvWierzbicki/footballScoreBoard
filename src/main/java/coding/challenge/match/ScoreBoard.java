@@ -38,6 +38,10 @@ public class ScoreBoard {
      * @param awayScore the away score
      */
     public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+        if (homeScore < 0 || awayScore < 0) {
+            throw new IllegalArgumentException("Scores must have positive values");
+        }
+
         var match = matches.stream()
                 .filter(mch -> mch.getHomeTeam().equals(homeTeam) && mch.getAwayTeam().equals(awayTeam))
                 .findFirst()
