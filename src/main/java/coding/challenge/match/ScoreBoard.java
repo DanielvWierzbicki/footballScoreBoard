@@ -1,9 +1,13 @@
 package coding.challenge.match;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class ScoreBoard {
+
     private final List<Match> matches;
 
     public ScoreBoard() {
@@ -14,8 +18,14 @@ public class ScoreBoard {
         matches.add(new Match(homeTeam, awayTeam));
     }
 
-    public List<Match> getMatches() {
-        return matches;
+    public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+        var match = matches.stream()
+                .filter(mat -> mat.getHomeTeam().equals(homeTeam) && mat.getAwayTeam().equals(awayTeam))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Match not found"));
+
+        match.setHomeScore(homeScore);
+        match.setAwayScore(awayScore);
     }
 }
 
