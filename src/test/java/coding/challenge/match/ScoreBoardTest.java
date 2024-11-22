@@ -30,4 +30,14 @@ class ScoreBoardTest {
         assertEquals(2, match.getHomeScore());
         assertEquals(1, match.getAwayScore());
     }
+
+    @Test
+    void testFinishMatch() {
+        var scoreBoard = new ScoreBoard();
+        scoreBoard.startMatch("Team A", "Team B");
+        scoreBoard.finishMatch("Team A", "Team B");
+
+        assertEquals(0, scoreBoard.getMatches().size());
+    }
+
 }

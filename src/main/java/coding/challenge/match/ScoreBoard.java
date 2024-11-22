@@ -20,12 +20,16 @@ public class ScoreBoard {
 
     public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
         var match = matches.stream()
-                .filter(mat -> mat.getHomeTeam().equals(homeTeam) && mat.getAwayTeam().equals(awayTeam))
+                .filter(mch -> mch.getHomeTeam().equals(homeTeam) && mch.getAwayTeam().equals(awayTeam))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Match not found"));
 
         match.setHomeScore(homeScore);
         match.setAwayScore(awayScore);
+    }
+
+    public void finishMatch(String homeTeam, String awayTeam) {
+        matches.removeIf(mch -> mch.getHomeTeam().equals(homeTeam) && mch.getAwayTeam().equals(awayTeam));
     }
 }
 
