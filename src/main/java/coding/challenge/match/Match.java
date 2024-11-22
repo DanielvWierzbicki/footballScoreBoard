@@ -17,6 +17,11 @@ public class Match {
         this.awayTeam = awayTeam;
     }
 
+    /**
+     * Sums the score of both teams
+     *
+     * @return the final score
+     */
     public int getTotalScore() {
         return homeScore + awayScore;
     }
