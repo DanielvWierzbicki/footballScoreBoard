@@ -3,7 +3,9 @@ package coding.challenge.match;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class ScoreBoard {
@@ -15,6 +17,9 @@ public class ScoreBoard {
     }
 
     public void startMatch(String homeTeam, String awayTeam) {
+        if (homeTeam == null || awayTeam == null || homeTeam.isEmpty() || awayTeam.isEmpty()) {
+            throw new IllegalArgumentException("Team names cannot be null or empty");
+        }
         matches.add(new Match(homeTeam, awayTeam));
     }
 
@@ -30,6 +35,13 @@ public class ScoreBoard {
 
     public void finishMatch(String homeTeam, String awayTeam) {
         matches.removeIf(mch -> mch.getHomeTeam().equals(homeTeam) && mch.getAwayTeam().equals(awayTeam));
+    }
+
+    public List<Match> getSummary() {
+        return matches.stream()
+                .sorted(Comparator.comparingInt(Match::getTotalScore).reversed()
+                        .thenComparing(match -> matches.size() - matches.indexOf(match)))
+                .collect(Collectors.toList());
     }
 }
 
