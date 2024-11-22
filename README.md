@@ -1,2 +1,1 @@
-# footballScoreBoard
-Live Football World Cup Score Board that shows matches and scores
+# Football World Cup Score Board
